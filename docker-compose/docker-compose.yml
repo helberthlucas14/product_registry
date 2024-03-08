@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
+    volumes:
+      - ./database-data:/data/db
+
+  localstack:
+    image: localstack/localstack:latest
+    restart: unless-stopped
+    ports:  
+      - "4567:4566"
+    environment:
+      - SERVICES=sns,sqs,s3
+      - DEBUG=1
+      - DATA_DIR=/var/lib/localstack/data
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR}
+    volumes:
+      - ./data:/var/lib/localstack      
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./bin:/docker-entrypoint-initaws.d
+
+  aws-cli:
+    image: amazon/aws-cli:latest
+    depends_on:
+      - localstack
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - ./setup.sh:/tmp/setup.sh
+    entrypoint: /bin/bash
+    command: 
+      - -c
+      - |
+        tr -d '\r' < /tmp/setup.sh > /tmp/setup_unix.sh && \
+        chmod +x /tmp/setup_unix.sh && \
+        /tmp/setup_unix.sh

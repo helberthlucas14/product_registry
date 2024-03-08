@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>2ca0bda0-650f-4e1b-90dd-7dded84ad5ae</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.2.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.27" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ProductRegistry.Infrastructure.CrossCutting.Commons\ProductRegistry.Infrastructure.CrossCutting.Commons.csproj" />
+	</ItemGroup>
+
+</Project>

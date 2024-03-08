@@ -1,0 +1,10 @@
+﻿﻿body {
+    margin: 0;
+    font - family: Roboto, "Cordia New", "Microsoft Sans Serif", Utsaah, "Devanagari MT", "Nirmala UI", Latha, InaiMathi, Gautami, "Telugu Sangam MN", Tunga, "Kannada Sangam MN", Kartika, "Malayalam Sangam MN", Shruti, "Nirmala UI", "Gujarati MT", "Gujarati Sangam MN", Vrinda, "Bangla Sangam MN", "Meiryo UI Reg", "MS UI Gothic Reg", "Hiragino Kaku Gothic Reg", "Microsoft YaHei", "Hiragino Sans GB", "Microsoft JhengHei", "Malgun Gothic", Gulim, AppleGothic, "Apple LiGothic", "LiHei Pro", Osaka, STHeiti, STXihei, SimHei, "Arial Unicode MS", Arial, sans - serif;
+    font - size: .875rem;
+    font - weight: 400;
+    line - height: 1.5;
+    color: #000;
+    text - align: left;
+    background - color: #fff;
+}
