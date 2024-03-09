@@ -2,22 +2,20 @@
 using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Models;
 using ProductRegistry.Domain.Core.Notications;
-using ProductRegistry.Domain.Interfaces.Repositories.Base;
+using ProductRegistry.Domain.Interfaces.Repositories;
 using ProductRegistry.Domain.Interfaces.Services.Base;
 using ProductRegistry.Domain.Validations.Resources;
-
 
 namespace ProductRegistry.Domain.Services.Base
 {
     public abstract class BaseServiceEntity<TEntity> : BaseService, IBaseServiceEntity<TEntity> where TEntity : Entity
     {
-        protected IBaseRepository<TEntity> BaseRepository { get; }
+        protected IMongoRepository<TEntity> BaseRepository { get; }
 
         public virtual IQueryable<TEntity> GetAllQuery => BaseRepository.GetAllQuery;
 
-        public virtual IQueryable<TEntity> GetAllQueryAsNoTracking => BaseRepository.GetAllQueryNoTracking;
 
-        protected BaseServiceEntity(IBaseRepository<TEntity> baseRepository,
+        protected BaseServiceEntity(IMongoRepository<TEntity> baseRepository,
                                  IHandler<DomainNotification> notifications)
             : base(notifications)
         {

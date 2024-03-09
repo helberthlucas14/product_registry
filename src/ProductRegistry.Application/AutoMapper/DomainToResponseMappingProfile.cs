@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProductRegistry.Application.UseCases.ApiErrorLog.Response;
+using ProductRegistry.Application.UseCases.Products.Response;
+using ProductRegistry.Domain.Models;
+
 
 namespace ProductRegistry.Application.AutoMapper
 {
@@ -11,6 +10,9 @@ namespace ProductRegistry.Application.AutoMapper
     {
         public DomainToResponseMappingProfile()
         {
+            CreateMap<ApiErrorLog, ApiErrorLogResponse>();
+
+            CreateMap<Product, ProductResponse>();
         }
     }
 }

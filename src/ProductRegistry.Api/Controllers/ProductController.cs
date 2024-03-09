@@ -22,7 +22,6 @@ namespace ProductRegistry.Api.Controllers
         public async Task<ActionResult<ProductResponse>> PostAsync(CreateProductRequest request)
         {
             var result = await _mediator.Send(request);
-
             return ResponsePost("Post", "Product", result);
         }
     }

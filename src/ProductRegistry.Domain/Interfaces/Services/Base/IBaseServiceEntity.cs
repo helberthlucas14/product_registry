@@ -11,7 +11,6 @@ namespace ProductRegistry.Domain.Interfaces.Services.Base
     {
         Task<TEntity> RegisterAsync(TEntity entity);
         IQueryable<TEntity> GetAllQuery { get; }
-        IQueryable<TEntity> GetAllQueryAsNoTracking { get; }
         Task<TEntity> GetByIdAsync(Guid id);
         Task<bool> ExistsAsync(Guid id);
     }

@@ -1,9 +1,9 @@
 ﻿using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Models;
 using ProductRegistry.Domain.Core.Notications;
-using ProductRegistry.Domain.Interfaces.Repositories.Base;
 using ProductRegistry.Domain.Interfaces.Validation.Base;
 using ProductRegistry.Domain.Interfaces.Validation;
+using ProductRegistry.Domain.Interfaces.Repositories;
 
 
 namespace ProductRegistry.Domain.Services.Base
@@ -12,7 +12,7 @@ namespace ProductRegistry.Domain.Services.Base
     {
         private readonly IRegisterValidation<TEntity> _registerValidation;
 
-        public BaseServiceValidation(IBaseRepository<TEntity> baseRepository,
+        public BaseServiceValidation(IMongoRepository<TEntity> baseRepository,
             IHandler<DomainNotification> notifications,
             IRegisterValidation<TEntity> registerValidation)
             : base(baseRepository, notifications)

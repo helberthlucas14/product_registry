@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProductRegistry.Application\ProductRegistry.Application.csproj" />
     <ProjectReference Include="..\ProductRegistry.Domain.Core\ProductRegistry.Domain.Core.csproj" />
     <ProjectReference Include="..\ProductRegistry.Infrastructure.Data\ProductRegistry.Infrastructure.Data.csproj" />
   </ItemGroup>

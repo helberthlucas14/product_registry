@@ -10,7 +10,7 @@ namespace ProductRegistry.Domain.Interfaces.Repositories.Base
 
         IQueryable<TEntity> GetAllQuery { get; }
 
-        IQueryable<TEntity> GetAllQueryNoTracking { get; }
+        //IQueryable<TEntity> GetAllQueryNoTracking { get; }
 
         Task<bool> ExistsAsync(Guid id);
     }

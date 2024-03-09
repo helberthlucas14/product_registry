@@ -11,13 +11,11 @@ namespace ProductRegistry.Infrastructure.Data.Repositories
 
         public MongoRepository(IMongoDatabase database)
         {
-            var collection = $"{nameof(TEntity)}s";
+            var collection = $"{typeof(TEntity)}s";
             _collection = database.GetCollection<TEntity>(collection);
         }
 
         public IQueryable<TEntity> GetAllQuery => _collection.AsQueryable();
-
-        public IQueryable<TEntity> GetAllQueryNoTracking => _collection.AsQueryable();
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {

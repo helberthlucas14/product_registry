@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		 <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 		 <PackageReference Include="FluentValidation.AspNetCore" Version="9.5.4" />
 		<PackageReference Include="MediatR" Version="11.0.0" />
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
@@ -25,6 +26,7 @@
 	  <ProjectReference Include="..\ProductRegistry.Application\ProductRegistry.Application.csproj" />
 	  <ProjectReference Include="..\ProductRegistry.Domain.Core\ProductRegistry.Domain.Core.csproj" />
 	  <ProjectReference Include="..\ProductRegistry.Infrastructure.CrossCutting.Commons\ProductRegistry.Infrastructure.CrossCutting.Commons.csproj" />
+	  <ProjectReference Include="..\ProductRegistry.Infrastructure.CrossCutting.IoC\ProductRegistry.Infrastructure.CrossCutting.IoC.csproj" />
 	</ItemGroup>
 
 </Project>

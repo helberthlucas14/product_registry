@@ -6,11 +6,7 @@ using ProductRegistry.Application.UseCases.Base;
 using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Notications;
 using ProductRegistry.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ProductRegistry.Application.UseCases.ApiErrorLog.Handlers
 {

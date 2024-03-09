@@ -1,5 +1,8 @@
 ﻿using ProductRegistry.Infrastructure.CrossCutting.Commons.Providers;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Runtime;
 
 namespace ProductRegistry.Api.Configurations.Api
 {
@@ -14,8 +17,12 @@ namespace ProductRegistry.Api.Configurations.Api
                 throw new ArgumentNullException(nameof(configuration));
 
             var appConfig = configuration.Get<AppConfig>();
+
             services.AddSingleton(typeof(DbSettingsProvider), appConfig.DbSettings);
+
             services.AddSingleton(typeof(AwsSettingsProvider), appConfig.AWSSettings);
+
+            services.MongoConfiguration(appConfig.DbSettings);
 
             return services;
         }
@@ -25,7 +32,14 @@ namespace ProductRegistry.Api.Configurations.Api
             if (dbSettingsProvider == null)
                 throw new ArgumentNullException(nameof(dbSettingsProvider));
 
-            services.AddScoped<IMongoClient>(s => new MongoClient(dbSettingsProvider.ConnectionString));
+            services.AddScoped<IMongoDatabase>(s =>
+            {
+                var mongoUrl = new MongoUrl(dbSettingsProvider.ConnectionString);
+                var mongoClient = new MongoClient(mongoUrl);
+                var databaseName = mongoUrl.DatabaseName;
+                return mongoClient.GetDatabase(databaseName);
+            });
+
             return services;
         }
     }

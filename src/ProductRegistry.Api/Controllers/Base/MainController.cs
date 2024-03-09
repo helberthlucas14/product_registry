@@ -9,7 +9,7 @@ namespace ProductRegistry.Api.Controllers.Base
     [ApiController]
     [Produces("application/json")]
     [Consumes("application/json")]
-    [Route("/api/[controller]")]
+    [Route("api/[controller]")]
     public class MainController : Controller
     {
         protected IHandler<DomainNotification> Notifications { get; }

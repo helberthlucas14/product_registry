@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 
 namespace ProductRegistry.Application.UseCases.Base
 {
-    public abstract class UseCaseBaseRequestToDomain<TRequest, TDomainModel, TResponse> : UseCaseBase<TRequest, TResponse>, IUseCaseBase<TRequest, TResponse>
+    public abstract class UseCaseBaseRequestToDomain<TRequest, TDomainModel, TResponse> :
+            UseCaseBase<TRequest, TResponse>, IUseCaseBase<TRequest, TResponse>
             where TRequest : CommandRequest<TResponse>, new()
             where TDomainModel : Entity, new()
     {

@@ -4,14 +4,17 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
-    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     ports:
       - 27017:27017
     volumes:
-      - ./database-data:/data/db
+        - mongodb_data:/data/db
+    networks:
+      - mongo-network
+
+
 
   localstack:
     image: localstack/localstack:latest
@@ -46,3 +49,10 @@ services:
         tr -d '\r' < /tmp/setup.sh > /tmp/setup_unix.sh && \
         chmod +x /tmp/setup_unix.sh && \
         /tmp/setup_unix.sh
+
+volumes:
+  mongodb_data:
+  
+networks:
+  mongo-network:
+    driver: bridge

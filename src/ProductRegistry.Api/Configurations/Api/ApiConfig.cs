@@ -2,6 +2,7 @@
 using ProductRegistry.Api.Configurations.Swagger;
 using ProductRegistry.Api.Filter;
 using ProductRegistry.Domain.Validations.ApiErrorLog;
+using ProductRegistry.Domain.Validations.Extensions;
 using ProductRegistry.Infrastructure.CrossCutting.Commons.Providers;
 using System.Text.Json.Serialization;
 
@@ -26,6 +27,9 @@ namespace ProductRegistry.Api.Configurations.Api
                 options.RegisterValidatorsFromAssemblyContaining(typeof(ApiErrorLogValidation));
             });
 
+            FluentConfiguration.ConfigureFluent();
+
+            services.AddSwaggerDocumentation(configuration);
 
             return services;
         }
@@ -40,9 +44,12 @@ namespace ProductRegistry.Api.Configurations.Api
 
             app.UseRouting();
 
+            app.UseHsts();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
