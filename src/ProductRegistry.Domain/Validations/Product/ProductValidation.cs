@@ -1,7 +1,4 @@
-﻿using System;
-using FluentValidation;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
 using ProductRegistry.Domain.Validations.Base;
 using ProductRegistry.Domain.Interfaces.Repositories;
 using ProductRegistry.Domain.Validations.Extensions;
@@ -38,7 +35,7 @@ namespace ProductRegistry.Domain.Validations.Product
                 .NotEmpty()
                 .MustAsync(async (entity, resource, colletion) =>
                  {
-                     return !await ValidateTitleKey(entity);
+                     return !await ValidateTitleKeyAsync(entity);
                  })
                 .WithMessage("Title must by unique.");
             ;
@@ -59,7 +56,7 @@ namespace ProductRegistry.Domain.Validations.Product
                 .NotEmpty();
         }
 
-        private async Task<bool> ValidateTitleKey(Models.Product product)
+        private async Task<bool> ValidateTitleKeyAsync(Models.Product product)
             => _productRepository.GetAllQuery.Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title));
 
     }

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductRegistry.Api.Controllers.Base;
 using ProductRegistry.Application.UseCases.Products.Request;
@@ -18,7 +17,7 @@ namespace ProductRegistry.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost, AllowAnonymous]
+        [HttpPost("")]
         public async Task<ActionResult<ProductResponse>> PostAsync(CreateProductRequest request)
         {
             var result = await _mediator.Send(request);

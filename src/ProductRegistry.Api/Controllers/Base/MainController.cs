@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Humanizer;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductRegistry.Application.Commons.Responses;
 using ProductRegistry.Domain.Core.Interfaces;

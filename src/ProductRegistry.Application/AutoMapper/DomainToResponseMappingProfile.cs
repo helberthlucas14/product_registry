@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Response;
+using ProductRegistry.Application.UseCases.Categories.Response;
 using ProductRegistry.Application.UseCases.Products.Response;
 using ProductRegistry.Domain.Models;
 
@@ -13,6 +14,7 @@ namespace ProductRegistry.Application.AutoMapper
             CreateMap<ApiErrorLog, ApiErrorLogResponse>();
 
             CreateMap<Product, ProductResponse>();
+            CreateMap<Category, CategoryResponse>();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ProductRegistry.Domain.Core.Interfaces;
-using ProductRegistry.Domain.Core.Models;
 using ProductRegistry.Domain.Core.Notications;
 using ProductRegistry.Domain.Interfaces.Repositories;
 using ProductRegistry.Domain.Interfaces.Services;
@@ -28,7 +27,7 @@ namespace ProductRegistry.Domain.Services
             if (!await base.VerifyRegister(entity))
                 return entity;
 
-            if (await NotExistCaegory(entity.CategoryId))
+            if (await NotExistCategory(entity.CategoryId))
             {
                 Notifications.Handle(DomainNotification.ModelValidation(ValidationMessages.GetMessage(nameof(DomainResources.CategoryNotFound)),
                                      string.Format(DomainResources.CategoryNotFound, entity.CategoryId)));
@@ -40,7 +39,7 @@ namespace ProductRegistry.Domain.Services
             return entity;
         }
 
-        private async Task<bool> NotExistCaegory(Guid categoryId)
+        private async Task<bool> NotExistCategory(Guid categoryId)
             => Guid.Empty.Equals(categoryId) ? false : !await _categoryRepository.ExistsAsync(categoryId);
     }
 }

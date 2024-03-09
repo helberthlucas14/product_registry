@@ -31,6 +31,11 @@ namespace ProductRegistry.Api.Configurations.Api
 
             services.AddSwaggerDocumentation(configuration);
 
+            services.AddControllersWithViews(options =>
+            {
+                options.Conventions.Add(new PluralizeControllerModelConvention());
+            });
+
             return services;
         }
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,6 +48,8 @@ namespace ProductRegistry.Api.Configurations.Api
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("All");
 
             app.UseHsts();
 

@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Handlers;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Request;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Response;
+using ProductRegistry.Application.UseCases.Categories.Handlers;
+using ProductRegistry.Application.UseCases.Categories.Request;
+using ProductRegistry.Application.UseCases.Categories.Response;
 using ProductRegistry.Application.UseCases.Products.Handlers;
 using ProductRegistry.Application.UseCases.Products.Request;
 using ProductRegistry.Application.UseCases.Products.Response;
@@ -14,6 +17,7 @@ using ProductRegistry.Domain.Interfaces.Validation;
 using ProductRegistry.Domain.Models;
 using ProductRegistry.Domain.Services;
 using ProductRegistry.Domain.Validations.ApiErrorLog;
+using ProductRegistry.Domain.Validations.Category;
 using ProductRegistry.Domain.Validations.Product;
 using ProductRegistry.Infrastructure.Data.Repositories;
 
@@ -43,9 +47,11 @@ namespace ProductRegistry.Infrastructure.CrossCutting.IoC
             services.AddScoped<IHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddScoped<IApiErrorLogService, ApiErrorLogService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddScoped<IRegisterValidation<ApiErrorLog>, RegisterApiErrorLogValidation>();
             services.AddScoped<IRegisterValidation<Product>, RegisterProductValidation>();
+            services.AddScoped<IRegisterValidation<Category>, RegisterCategoryValidation>();
 
             return services;
         }
@@ -59,6 +65,7 @@ namespace ProductRegistry.Infrastructure.CrossCutting.IoC
 
 
             services.AddScoped<IRequestHandler<CreateProductRequest, ProductResponse>, CreateProductUseCase>();
+            services.AddScoped<IRequestHandler<CreateCategoryRequest, CategoryResponse>, CreateCategoryUseCase>();
 
             return services;
         }

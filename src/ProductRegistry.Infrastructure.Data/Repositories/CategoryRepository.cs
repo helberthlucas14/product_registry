@@ -10,5 +10,11 @@ namespace ProductRegistry.Infrastructure.Data.Repositories
         public CategoryRepository(IMongoDatabase database) : base(database)
         {
         }
+
+        public async Task<Category> GetByTitleAsync(string title)
+        {
+            var filter = Builders<Category>.Filter.Eq(x => x.Title, title);
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
     }
 }

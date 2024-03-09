@@ -3,7 +3,7 @@ using ProductRegistry.Domain.Models;
 
 namespace ProductRegistry.Infrastructure.Data.Context.Configurations.Mongo
 {
-    public class CategoryMongoConfiguration
+    public class CategoryMongoConfiguration : EntityMongoConfiguration<Category>
     {
         public static void Configure()
         {

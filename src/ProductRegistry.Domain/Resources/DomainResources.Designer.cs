@@ -61,6 +61,15 @@ namespace ProductRegistry.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Categoria {0} já existe..
+        /// </summary>
+        internal static string CategoryExists {
+            get {
+                return ResourceManager.GetString("CategoryExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Categoria não encontrado para o id: {0}.
         /// </summary>
         internal static string CategoryNotFound {
