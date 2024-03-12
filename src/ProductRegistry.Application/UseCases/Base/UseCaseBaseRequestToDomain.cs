@@ -6,12 +6,6 @@ using ProductRegistry.Domain.Core.Messages;
 using ProductRegistry.Domain.Core.Models;
 using ProductRegistry.Domain.Core.Notications;
 using ProductRegistry.Domain.Interfaces.Services.Base;
-using ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductRegistry.Application.UseCases.Base
 {
@@ -37,13 +31,6 @@ namespace ProductRegistry.Application.UseCases.Base
         {
             var registerCommand = Mapper.Map<TDomainModel>(request);
             registerCommand = await BaseDomainService.RegisterAsync(registerCommand);
-
-            //if (!await CommitAsync())
-            //{
-            //    var errorMessage = $"Commit could not be performed for '{request.ToJson()}' - {Notifications.GetNotificationMessages()}";
-            //    Notifications.Handle(DomainNotification.Error("UseCaseBaseRequestToDomain", errorMessage));
-            //}
-
             var registerResponse = Mapper.Map<TResponse>(registerCommand);
             return registerResponse;
         }

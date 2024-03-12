@@ -37,14 +37,14 @@ namespace ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions
             return !source.Any();
         }
 
-        public static string GetDescription<T>(this T enumValue)
+        public static string? GetDescription<T>(this T enumValue)
             where T : struct, IConvertible
         {
             if (!typeof(T).IsEnum)
                 return null;
 
             var description = enumValue.ToString();
-            var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
+            var fieldInfo = enumValue.GetType().GetField(enumValue.ToString() ?? string.Empty);
 
             if (fieldInfo != null)
             {

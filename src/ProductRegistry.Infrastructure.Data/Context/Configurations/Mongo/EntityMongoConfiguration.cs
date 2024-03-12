@@ -12,7 +12,7 @@ namespace ProductRegistry.Infrastructure.Data.Context.Configurations.Mongo
             {
                 cm.AutoMap();
                 cm.SetIgnoreExtraElements(true);
-                cm.MapMember(e => e.Id).SetIdGenerator(new GuidGenerator());
+                cm.MapMember(e => e.Id).SetIsRequired(true);
 
                 cm.MapMember(e => e.OwnerId).SetIsRequired(true);
                 

@@ -12,6 +12,7 @@ namespace ProductRegistry.Domain.Core.Notications
         {
             ClearNotifications();
             _logger = logger;
+            _notifications = new List<DomainNotification>();
         }
 
         public void Handle(DomainNotification args)
@@ -121,7 +122,7 @@ namespace ProductRegistry.Domain.Core.Notications
 
         protected virtual void Dispose(bool disposing)
         {
-            _notifications = null;
+            _notifications.Clear();
             ClearNotifications();
         }
     }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Handlers;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Request;
@@ -9,6 +10,7 @@ using ProductRegistry.Application.UseCases.Categories.Response;
 using ProductRegistry.Application.UseCases.Products.Handlers;
 using ProductRegistry.Application.UseCases.Products.Request;
 using ProductRegistry.Application.UseCases.Products.Response;
+using ProductRegistry.Application.UseCases.Products.Validations;
 using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Notications;
 using ProductRegistry.Domain.Interfaces.Repositories;
@@ -46,12 +48,16 @@ namespace ProductRegistry.Infrastructure.CrossCutting.IoC
         {
             services.AddScoped<IHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddScoped<IApiErrorLogService, ApiErrorLogService>();
+
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductServiceValidation, ProductServiceValidation>();
             services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddScoped<IRegisterValidation<ApiErrorLog>, RegisterApiErrorLogValidation>();
             services.AddScoped<IRegisterValidation<Product>, RegisterProductValidation>();
             services.AddScoped<IRegisterValidation<Category>, RegisterCategoryValidation>();
+
+            services.AddScoped<IValidator<UpdateProjectRequest>, RegisterUpdateValidation>();
 
             return services;
         }
@@ -65,7 +71,10 @@ namespace ProductRegistry.Infrastructure.CrossCutting.IoC
 
 
             services.AddScoped<IRequestHandler<CreateProductRequest, ProductResponse>, CreateProductUseCase>();
+            services.AddScoped<IRequestHandler<UpdateProjectRequest, ProductResponse>, UpdateProductUseCase>();
+
             services.AddScoped<IRequestHandler<CreateCategoryRequest, CategoryResponse>, CreateCategoryUseCase>();
+            services.AddScoped<IRequestHandler<UpdateCategoryRequest, CategoryResponse>, UpdateCategoryUseCase>();
 
             return services;
         }

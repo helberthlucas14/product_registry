@@ -1,4 +1,5 @@
 ﻿using ProductRegistry.Domain.Core.Models;
+using ProductRegistry.Domain.Models;
 
 namespace ProductRegistry.Domain.Interfaces.Repositories.Base
 {
@@ -6,10 +7,12 @@ namespace ProductRegistry.Domain.Interfaces.Repositories.Base
     {
         Task<TEntity> AddAsync(TEntity entity);
 
-        Task<TEntity> GetByIdAsync(Guid id);
+        Task<TEntity> GetByIdAsync(Guid id, Guid ownerId);
 
-        IQueryable<TEntity> GetAllQuery { get; }
+        IQueryable<TEntity> GetAllQuery(Guid ownerId);
 
-        Task<bool> ExistsAsync(Guid id);
+        Task<bool> ExistsAsync(Guid id, Guid ownerId);
+
+        public Task<bool> UpdateAsync(TEntity entity);
     }
 }

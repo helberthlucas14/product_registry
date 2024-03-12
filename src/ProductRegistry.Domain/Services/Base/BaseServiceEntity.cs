@@ -12,7 +12,7 @@ namespace ProductRegistry.Domain.Services.Base
     {
         protected IMongoRepository<TEntity> BaseRepository { get; }
 
-        public virtual IQueryable<TEntity> GetAllQuery => BaseRepository.GetAllQuery;
+        public virtual IQueryable<TEntity> GetAllQuery(Guid ownerId) => BaseRepository.GetAllQuery(ownerId);
 
 
         protected BaseServiceEntity(IMongoRepository<TEntity> baseRepository,
@@ -22,16 +22,16 @@ namespace ProductRegistry.Domain.Services.Base
             BaseRepository = baseRepository;
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity> GetByIdAsync(Guid id, Guid ownerId)
         {
             if (id == default)
                 return default;
 
-            return await BaseRepository.GetByIdAsync(id);
+            return await BaseRepository.GetByIdAsync(id, ownerId);
         }
 
-        public virtual async Task<bool> ExistsAsync(Guid id)
-            => await BaseRepository.ExistsAsync(id);
+        public virtual async Task<bool> ExistsAsync(Guid id, Guid ownerId)
+            => await BaseRepository.ExistsAsync(id, ownerId);
 
         public virtual async Task<TEntity> RegisterAsync(TEntity entity)
         {

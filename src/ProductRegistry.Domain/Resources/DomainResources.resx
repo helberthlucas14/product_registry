@@ -123,4 +123,7 @@
   <data name="CategoryNotFound" xml:space="preserve">
     <value>Categoria não encontrado para o id: {0}</value>
   </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Produto não encontrado para o id: {0}</value>
+  </data>
 </root>

@@ -1,17 +1,29 @@
 ﻿using FluentValidation;
-using ProductRegistry.Domain.Validations.Base;
+using ProductRegistry.Application.UseCases.Products.Request;
 using ProductRegistry.Domain.Interfaces.Repositories;
 using ProductRegistry.Domain.Validations.Extensions;
 
-
-namespace ProductRegistry.Domain.Validations.Product
+namespace ProductRegistry.Application.UseCases.Products.Validations
 {
-    public class ProductValidation : BaseValidation<Models.Product>
+    public class RegisterUpdateValidation : ProductUpdateValidation
+    {
+        public RegisterUpdateValidation(IProductRepository productRepository,
+                                       ICategoryRepository categoryRepository)
+                              : base(productRepository, categoryRepository)
+        {
+            ValidateOwnerId();
+            ValidateCategoryId();
+            ValidateTitle();
+            ValidateDescription();
+            ValidatePrice();
+        }
+    }
+    public class ProductUpdateValidation : AbstractValidator<UpdateProjectRequest>
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public ProductValidation(IProductRepository productRepository,
+        public ProductUpdateValidation(IProductRepository productRepository,
                                  ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
@@ -28,7 +40,6 @@ namespace ProductRegistry.Domain.Validations.Product
         protected void ValidateCategoryId()
         {
             RuleFor(x => x.CategoryId)
-                .IsGuid()
                 .MustAsync(async (entity, resource, collection) =>
                 {
                     return !await ValidateCategoryIdAsync(entity);
@@ -42,9 +53,9 @@ namespace ProductRegistry.Domain.Validations.Product
                 .MaximumLength(50)
                 .NotEmpty()
                 .MustAsync(async (entity, resource, colletion) =>
-                 {
-                     return !await ValidateTitleKeyAsync(entity);
-                 })
+                {
+                    return !await ValidateTitleKeyAsync(entity);
+                })
                 .WithMessage("Title must by unique.");
         }
 
@@ -62,11 +73,16 @@ namespace ProductRegistry.Domain.Validations.Product
                 .GreaterThan(0);
         }
 
-        private Task<bool> ValidateTitleKeyAsync(Models.Product product)
-            => Task.FromResult(_productRepository.GetAllQuery(product.OwnerId).Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
+        private Task<bool> ValidateTitleKeyAsync(UpdateProjectRequest product)
+            => Task.FromResult(_productRepository.GetAllQuery(product.OwnerId).Any(p => p.Title.Equals(product.Title) && p.Id == product.Id));
 
-        private async Task<bool> ValidateCategoryIdAsync(Models.Product product)
-               => await _categoryRepository.GetByIdAsync(product.CategoryId, product.OwnerId) == null;
+        private async Task<bool> ValidateCategoryIdAsync(UpdateProjectRequest product)
+        {
+            if (Guid.Empty.Equals(product.CategoryId))
+                return await _categoryRepository.GetByIdAsync(product.CategoryId.Value, product.OwnerId) != null;
+
+            return false;
+        }
 
     }
 }

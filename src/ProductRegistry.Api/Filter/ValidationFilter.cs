@@ -13,7 +13,7 @@ namespace ProductRegistry.Api.Filter
         {
             if (!context.ModelState.IsValid)
             {
-                var messages = context.ModelState
+                var messages = context?.ModelState
                     .SelectMany(ms => ms.Value.Errors)
                     .Select(e => e.ErrorMessage)
                     .ToList();

@@ -22,7 +22,7 @@ namespace ProductRegistry.Application.UseCases.ApiErrorLog.Handlers
 
         public override async Task<GetErrorsResponse> HandleSafeMode(GetErrorsRequest request, CancellationToken cancellationToken)
         {
-            var entities = await BaseDomainService.GetAllQuery
+            var entities = await BaseDomainService.GetAllQuery(request.OwnerId)
                 .Where(x => x.Timestamp >= request.StartDate && x.Timestamp <= request.EndDate)
                 .ToListAsync(cancellationToken);
 

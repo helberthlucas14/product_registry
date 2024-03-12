@@ -77,5 +77,14 @@ namespace ProductRegistry.Domain.Resources {
                 return ResourceManager.GetString("CategoryNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produto não encontrado para o id: {0}.
+        /// </summary>
+        internal static string ProductNotFound {
+            get {
+                return ResourceManager.GetString("ProductNotFound", resourceCulture);
+            }
+        }
     }
 }

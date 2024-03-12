@@ -6,5 +6,6 @@ namespace ProductRegistry.Domain.Interfaces.Repositories
 {
     public interface IMongoRepository<TEntity> : IBaseRepository<TEntity> where TEntity : Entity
     {
+        public IQueryable<TEntity> GetAllQuery(Guid ownerId);
     }
 }

@@ -7,12 +7,12 @@ namespace ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions
         public static string GetErrorMsg(this Exception ex)
         {
             StringBuilder sb = new StringBuilder(ex?.Message);
-            Exception inner = ex.InnerException;
+            Exception inner = ex?.InnerException ?? new Exception();
 
             while (inner != null)
             {
                 sb.Append($" - {inner.Message}");
-                inner = inner.InnerException;
+                inner = inner?.InnerException ?? new Exception();
             }
             return sb.ToString();
         }
@@ -26,11 +26,11 @@ namespace ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions
                 errorList.Add(ex.Message);
             }
 
-            Exception inner = ex?.InnerException;
+            Exception inner = ex?.InnerException ?? new Exception();
             while (inner != null)
             {
                 errorList.Add(inner.Message);
-                inner = inner.InnerException;
+                inner = inner?.InnerException ?? new Exception();
             }
 
             return errorList;

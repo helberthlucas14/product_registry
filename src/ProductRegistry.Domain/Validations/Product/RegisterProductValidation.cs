@@ -5,7 +5,8 @@ namespace ProductRegistry.Domain.Validations.Product
 {
     public class RegisterProductValidation : ProductValidation, IRegisterValidation<Models.Product>
     {
-        public RegisterProductValidation(IMongoRepository<Models.Product> repository) : base(repository)
+        public RegisterProductValidation(IProductRepository ProductRepository, 
+            ICategoryRepository categoryRepository) : base(ProductRepository, categoryRepository)
         {
             ValidateOwnerId();
             ValidateCategoryId();

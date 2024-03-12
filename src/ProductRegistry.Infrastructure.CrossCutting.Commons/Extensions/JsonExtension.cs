@@ -69,7 +69,7 @@ namespace ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions
             }
         }
 
-        public static T ToObject<T>(this string stringToObject, bool useSettings = false)
+        public static T? ToObject<T>(this string stringToObject, bool useSettings = false)
         {
             if (useSettings)
             {

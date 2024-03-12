@@ -5,6 +5,7 @@ using ProductRegistry.Application.UseCases.Products.Request;
 using ProductRegistry.Application.UseCases.Products.Response;
 using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Notications;
+using ProductRegistry.Infrastructure.CrossCutting.Commons.Extensions;
 
 namespace ProductRegistry.Api.Controllers
 {
@@ -18,10 +19,17 @@ namespace ProductRegistry.Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ActionResult<ProductResponse>> PostAsync(CreateProductRequest request)
+        public async Task<ActionResult<ProductResponse>> PostAsync([FromBody] CreateProductRequest request)
         {
             var result = await _mediator.Send(request);
             return ResponsePost("Post", "Product", result);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateProjectRequest request)
+        {
+            await _mediator.Send(request.SetId(id));
+            return ResponsePutPatch();
         }
     }
 }

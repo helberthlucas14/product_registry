@@ -20,10 +20,19 @@ namespace ProductRegistry.Api.Controllers
 
 
         [HttpPost("")]
-        public async Task<ActionResult<CategoryResponse>> PostAsync(CreateCategoryRequest request)
+        public async Task<ActionResult<CategoryResponse>> PostAsync([FromBody] CreateCategoryRequest request)
         {
             var result = await _mediator.Send(request);
             return ResponsePost("Post", "Category", result);
         }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateCategoryRequest request)
+        {
+            await _mediator.Send(request.SetId(id));
+            return ResponsePutPatch();
+        }
+
     }
 }

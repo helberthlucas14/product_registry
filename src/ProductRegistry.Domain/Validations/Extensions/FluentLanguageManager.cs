@@ -16,7 +16,7 @@ namespace ProductRegistry.Domain.Validations.Extensions
             AddTranslation("pt-BR", "LengthValidator2", "'{PropertyName}' deve ter entre {MinLength} e {MaxLength} caracteres.");
         }
 
-        private static string GetMessage(string key, string propertyName, object parameters = null, CultureInfo culture = null)
+        private static string GetMessage(string key, string propertyName, object? parameters = null, CultureInfo? culture = null)
         {
             var result = ValidatorOptions.Global.LanguageManager.GetString(key, culture);
             var messageBuilder = ValidatorOptions.Global.MessageFormatterFactory();

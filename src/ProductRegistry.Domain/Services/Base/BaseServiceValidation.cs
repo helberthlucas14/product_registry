@@ -20,7 +20,7 @@ namespace ProductRegistry.Domain.Services.Base
             _registerValidation = registerValidation;
         }
 
-        private async Task<bool> CallValidationAsync(TEntity entity, IBaseValidation<TEntity> validator, TEntity oldEntity)
+        private async Task<bool> CallValidationAsync(TEntity entity, IBaseValidation<TEntity> validator, TEntity? oldEntity)
         {
             var result = await validator.IsValidAsync(entity, oldEntity);
             if (!result.IsValid)

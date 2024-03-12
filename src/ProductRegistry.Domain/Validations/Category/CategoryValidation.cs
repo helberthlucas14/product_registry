@@ -47,7 +47,7 @@ namespace ProductRegistry.Domain.Validations.Category
                 .MaximumLength(200);
         }
 
-        private async Task<bool> ValidateTitleKey(Models.Category product)
-                  => _categoryRepository.GetAllQuery.Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title));
+        private Task<bool> ValidateTitleKey(Models.Category product)
+                  => Task.FromResult(_categoryRepository.GetAllQuery(product.OwnerId).Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
     }
 }

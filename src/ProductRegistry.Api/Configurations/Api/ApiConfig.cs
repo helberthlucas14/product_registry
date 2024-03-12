@@ -22,10 +22,7 @@ namespace ProductRegistry.Api.Configurations.Api
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             })
-            .AddFluentValidation(options =>
-            {
-                options.RegisterValidatorsFromAssemblyContaining(typeof(ApiErrorLogValidation));
-            });
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApiErrorLogValidation>());
 
             FluentConfiguration.ConfigureFluent();
 

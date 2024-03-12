@@ -6,6 +6,7 @@ using ProductRegistry.Application.UseCases.Products.Response;
 using ProductRegistry.Domain.Core.Interfaces;
 using ProductRegistry.Domain.Core.Notications;
 using ProductRegistry.Domain.Interfaces.Services;
+using ProductRegistry.Domain.Interfaces.Services.Base;
 using ProductRegistry.Domain.Models;
 
 
@@ -13,10 +14,10 @@ namespace ProductRegistry.Application.UseCases.Products.Handlers
 {
     public class CreateProductUseCase : UseCaseBaseRequestToDomain<CreateProductRequest, Product, ProductResponse>
     {
-        private readonly IProductService _productService;
+        private readonly IProductServiceValidation _productService;
         public CreateProductUseCase(IHandler<DomainNotification> notifications,
             IMediator mediator,
-            IProductService baseService,
+            IProductServiceValidation baseService,
             IMapper mapper) : base(notifications, mediator, baseService, mapper)
         {
             _productService = baseService;
