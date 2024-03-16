@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ProductRegistry.Application.Events.Products;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Handlers;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Request;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Response;
@@ -46,12 +47,15 @@ namespace ProductRegistry.Infrastructure.CrossCutting.IoC
 
         public static IServiceCollection RegisterDomainServices(this IServiceCollection services)
         {
+            services.AddScoped<INotificationHandler<ProductEventRequest>, ProductEventHandler>();
+
             services.AddScoped<IHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddScoped<IApiErrorLogService, ApiErrorLogService>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductServiceValidation, ProductServiceValidation>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddSingleton<IOwnerService, OwnerService>();
 
             services.AddScoped<IRegisterValidation<ApiErrorLog>, RegisterApiErrorLogValidation>();
             services.AddScoped<IRegisterValidation<Product>, RegisterProductValidation>();

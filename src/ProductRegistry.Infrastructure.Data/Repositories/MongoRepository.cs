@@ -4,7 +4,9 @@ using MongoDB.Driver;
 using ProductRegistry.Domain.Core.Models;
 using ProductRegistry.Domain.Interfaces.Repositories;
 using ProductRegistry.Domain.Interfaces.Repositories.Base;
+using ProductRegistry.Domain.Interfaces.Services;
 using ProductRegistry.Domain.Models;
+using ProductRegistry.Infrastructure.CrossCutting.Commons.Middlewares;
 
 
 namespace ProductRegistry.Infrastructure.Data.Repositories
@@ -12,18 +14,17 @@ namespace ProductRegistry.Infrastructure.Data.Repositories
     public class MongoRepository<TEntity> : IMongoRepository<TEntity> where TEntity : Entity
     {
         public readonly IMongoCollection<TEntity> Collection;
+        private IOwnerService _tenantService;
 
-        public MongoRepository(IMongoDatabase database)
+        public MongoRepository(IMongoDatabase database, IOwnerService tenantService)
         {
             var collectionName = typeof(TEntity).Name.Pluralize().ToLower();
             Collection = database.GetCollection<TEntity>(collectionName);
+            _tenantService = tenantService;
         }
 
-        public IQueryable<TEntity> GetAllQuery(Guid ownerId)
-        {
-            return Collection.Find(GetOwnerFilter(ownerId)).ToEnumerable().AsQueryable();
-
-        }
+        public IQueryable<TEntity> GetAllQuery =>
+                  Collection.Find(GetOwnerFilter(_tenantService.OwnerId)).ToEnumerable().AsQueryable();
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
@@ -31,15 +32,15 @@ namespace ProductRegistry.Infrastructure.Data.Repositories
             return entity;
         }
 
-        public async Task<bool> ExistsAsync(Guid id, Guid ownerId)
+        public async Task<bool> ExistsAsync(Guid id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id) & GetOwnerFilter(ownerId);
+            var filter = Builders<TEntity>.Filter.Eq("_id", id) & GetOwnerFilter(_tenantService.OwnerId);
             return await Collection.Find(filter).AnyAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id, Guid ownerId)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id) & GetOwnerFilter(ownerId); ;
+            var filter = Builders<TEntity>.Filter.Eq("_id", id) & GetOwnerFilter(_tenantService.OwnerId);
             return await Collection.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -51,10 +52,9 @@ namespace ProductRegistry.Infrastructure.Data.Repositories
             return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
-        public FilterDefinition<TEntity> GetOwnerFilter(Guid ownerId)
-        {
-            return Builders<TEntity>.Filter.Eq("OwnerId", ownerId);
-        }
+        public FilterDefinition<TEntity> GetOwnerFilter(Guid ownerId) =>
+             Builders<TEntity>.Filter.Eq(nameof(Entity.OwnerId), ownerId);
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);

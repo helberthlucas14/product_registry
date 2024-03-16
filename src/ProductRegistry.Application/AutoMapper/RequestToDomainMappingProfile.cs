@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using ProductRegistry.Application.Events.Base;
+using ProductRegistry.Application.Events.Categories;
+using ProductRegistry.Application.Events.Products;
 using ProductRegistry.Application.UseCases.ApiErrorLog.Request;
 using ProductRegistry.Application.UseCases.Categories.Request;
 using ProductRegistry.Application.UseCases.Products.Handlers;
@@ -18,6 +21,10 @@ namespace ProductRegistry.Application.AutoMapper
 
             CreateMap<CreateCategoryRequest, Category>();
             CreateMap<UpdateCategoryRequest, Category>();
+
+            CreateMap<ProductEventRequest, NotificationRequest>();
+            CreateMap<CategoryEventRequest, NotificationRequest>();
+            
         }
 
     }

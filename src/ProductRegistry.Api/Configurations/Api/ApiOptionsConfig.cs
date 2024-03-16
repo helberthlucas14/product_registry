@@ -3,6 +3,11 @@ using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime;
+using ProductRegistry.Domain.Interfaces.Services;
+using ProductRegistry.Domain.Services;
+using Amazon.Runtime;
+using Amazon.SimpleNotificationService;
+using Amazon;
 
 namespace ProductRegistry.Api.Configurations.Api
 {
@@ -22,10 +27,35 @@ namespace ProductRegistry.Api.Configurations.Api
 
             services.AddSingleton(typeof(AwsSettingsProvider), appConfig.AWSSettings);
 
+
             services.MongoConfiguration(appConfig.DbSettings);
+
+            services.SnsConfiguration(appConfig.AWSSettings);
 
             return services;
         }
+
+
+        public static IServiceCollection SnsConfiguration(this IServiceCollection services, AwsSettingsProvider awsSettingsProvider)
+        {
+            var awsRegion = awsSettingsProvider.Region;
+            var awsAccessKeyId = awsSettingsProvider.AccessKeyId;
+            var awsSecretAccessKey = awsSettingsProvider.SecretAccessKey;
+
+            var awsCredentials = new BasicAWSCredentials(awsAccessKeyId, awsSecretAccessKey);
+
+            services.AddSingleton<IAmazonSimpleNotificationService>(sp =>
+                new AmazonSimpleNotificationServiceClient(awsCredentials, new AmazonSimpleNotificationServiceConfig
+                {
+                    ServiceURL = awsSettingsProvider.SNS.Url
+                }));
+
+            services.AddSingleton<ISnsService>(sp =>
+                new SnsService(awsSettingsProvider.SNS.Url, awsAccessKeyId, awsSecretAccessKey));
+
+            return services;
+        }
+
 
         public static IServiceCollection MongoConfiguration(this IServiceCollection services, DbSettingsProvider dbSettingsProvider)
         {
@@ -48,5 +78,6 @@ namespace ProductRegistry.Api.Configurations.Api
     {
         public DbSettingsProvider DbSettings { get; set; } = new DbSettingsProvider();
         public AwsSettingsProvider AWSSettings { get; set; } = new AwsSettingsProvider();
+
     }
 }

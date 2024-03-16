@@ -74,12 +74,12 @@ namespace ProductRegistry.Application.UseCases.Products.Validations
         }
 
         private Task<bool> ValidateTitleKeyAsync(UpdateProjectRequest product)
-            => Task.FromResult(_productRepository.GetAllQuery(product.OwnerId).Any(p => p.Title.Equals(product.Title) && p.Id == product.Id));
+            => Task.FromResult(_productRepository.GetAllQuery.Any(p => p.Title.Equals(product.Title) && p.Id == product.Id));
 
         private async Task<bool> ValidateCategoryIdAsync(UpdateProjectRequest product)
         {
             if (Guid.Empty.Equals(product.CategoryId))
-                return await _categoryRepository.GetByIdAsync(product.CategoryId.Value, product.OwnerId) != null;
+                return await _categoryRepository.GetByIdAsync(product.CategoryId.Value) != null;
 
             return false;
         }

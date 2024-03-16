@@ -58,6 +58,6 @@ namespace ProductRegistry.Domain.Services
         }
 
         private async Task<bool> NotExistCategory(Guid categoryId, Guid ownerId)
-         => Guid.Empty.Equals(categoryId) ? false : !await _categoryRepository.ExistsAsync(categoryId, ownerId);
+         => Guid.Empty.Equals(categoryId) ? false : !await _categoryRepository.ExistsAsync(categoryId);
     }
 }

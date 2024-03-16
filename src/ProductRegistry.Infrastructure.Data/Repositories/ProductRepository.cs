@@ -1,12 +1,14 @@
 ﻿using MongoDB.Driver;
 using ProductRegistry.Domain.Interfaces.Repositories;
+using ProductRegistry.Domain.Interfaces.Services;
 using ProductRegistry.Domain.Models;
+using ProductRegistry.Infrastructure.CrossCutting.Commons.Middlewares;
 
 namespace ProductRegistry.Infrastructure.Data.Repositories
 {
     public class ProductRepository : MongoRepository<Product>, IProductRepository
     {
-        public ProductRepository(IMongoDatabase database) : base(database)
+        public ProductRepository(IMongoDatabase database, IOwnerService tenant) : base(database, tenant)
         {
         }
 

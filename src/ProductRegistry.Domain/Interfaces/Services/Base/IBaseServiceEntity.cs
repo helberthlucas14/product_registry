@@ -10,8 +10,8 @@ namespace ProductRegistry.Domain.Interfaces.Services.Base
     public interface IBaseServiceEntity<TEntity> : IBaseService where TEntity : Entity
     {
         Task<TEntity> RegisterAsync(TEntity entity);
-        IQueryable<TEntity> GetAllQuery(Guid ownerId);
-        Task<TEntity> GetByIdAsync(Guid id, Guid ownerId);
-        Task<bool> ExistsAsync(Guid id, Guid ownerId);
+        IQueryable<TEntity> GetAllQuery { get; }
+        Task<TEntity> GetByIdAsync(Guid id);
+        Task<bool> ExistsAsync(Guid id);
     }
 }

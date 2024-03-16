@@ -44,7 +44,7 @@ namespace ProductRegistry.Domain.Services
             if (!await base.VerifyRegister(entity))
                 return entity;
 
-            var getCategory = _categoryRepository.GetAllQuery(entity.OwnerId).Where(c => c.OwnerId == entity.OwnerId && c.Id == entity.Id).FirstOrDefault();
+            var getCategory = _categoryRepository.GetAllQuery.Where(c => c.OwnerId == entity.OwnerId && c.Id == entity.Id).FirstOrDefault();
 
             if (getCategory == null)
             {

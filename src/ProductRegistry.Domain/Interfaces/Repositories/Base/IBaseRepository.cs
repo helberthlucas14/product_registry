@@ -7,11 +7,11 @@ namespace ProductRegistry.Domain.Interfaces.Repositories.Base
     {
         Task<TEntity> AddAsync(TEntity entity);
 
-        Task<TEntity> GetByIdAsync(Guid id, Guid ownerId);
+        Task<TEntity> GetByIdAsync(Guid id);
 
-        IQueryable<TEntity> GetAllQuery(Guid ownerId);
+        IQueryable<TEntity> GetAllQuery { get; }
 
-        Task<bool> ExistsAsync(Guid id, Guid ownerId);
+        Task<bool> ExistsAsync(Guid id);
 
         public Task<bool> UpdateAsync(TEntity entity);
     }

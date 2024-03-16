@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ProductRegistry.Api.Configurations.Swagger
 {
@@ -12,6 +14,7 @@ namespace ProductRegistry.Api.Configurations.Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductRegistry.API", Version = "v1" });
+                c.OperationFilter<AddOwnerIdHeaderParameter>();
             });
 
         }
@@ -33,5 +36,23 @@ namespace ProductRegistry.Api.Configurations.Swagger
             return app;
         }
 
+        public class AddOwnerIdHeaderParameter : IOperationFilter
+        {
+            public void Apply(OpenApiOperation operation, OperationFilterContext context)
+            {
+                // Adiciona o parâmetro de cabeçalho ownerId em todas as operações
+                if (operation.Parameters == null)
+                    operation.Parameters = new List<OpenApiParameter>();
+
+                operation.Parameters.Add(new OpenApiParameter
+                {
+                    Name = "ownerId",
+                    In = ParameterLocation.Header,
+                    Description = "Owner ID",
+                    Required = true
+                });
+            }
+
+        }
     }
 }

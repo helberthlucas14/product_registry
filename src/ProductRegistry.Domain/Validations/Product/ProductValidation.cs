@@ -63,10 +63,10 @@ namespace ProductRegistry.Domain.Validations.Product
         }
 
         private Task<bool> ValidateTitleKeyAsync(Models.Product product)
-            => Task.FromResult(_productRepository.GetAllQuery(product.OwnerId).Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
+            => Task.FromResult(_productRepository.GetAllQuery.Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
 
         private async Task<bool> ValidateCategoryIdAsync(Models.Product product)
-               => await _categoryRepository.GetByIdAsync(product.CategoryId, product.OwnerId) == null;
+               => await _categoryRepository.GetByIdAsync(product.CategoryId) == null;
 
     }
 }

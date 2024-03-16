@@ -48,6 +48,6 @@ namespace ProductRegistry.Domain.Validations.Category
         }
 
         private Task<bool> ValidateTitleKey(Models.Category product)
-                  => Task.FromResult(_categoryRepository.GetAllQuery(product.OwnerId).Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
+                  => Task.FromResult(_categoryRepository.GetAllQuery.Any(p => !string.IsNullOrEmpty(p.Title) && p.Title.Equals(product.Title)));
     }
 }

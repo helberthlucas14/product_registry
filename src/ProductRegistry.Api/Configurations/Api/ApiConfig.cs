@@ -4,6 +4,7 @@ using ProductRegistry.Api.Filter;
 using ProductRegistry.Domain.Validations.ApiErrorLog;
 using ProductRegistry.Domain.Validations.Extensions;
 using ProductRegistry.Infrastructure.CrossCutting.Commons.Providers;
+using ProductRegistry.Infrastructure.CrossCutting.Commons.Middlewares;
 using System.Text.Json.Serialization;
 
 namespace ProductRegistry.Api.Configurations.Api
@@ -32,6 +33,11 @@ namespace ProductRegistry.Api.Configurations.Api
             {
                 options.Conventions.Add(new PluralizeControllerModelConvention());
             });
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+
 
             return services;
         }
@@ -49,6 +55,10 @@ namespace ProductRegistry.Api.Configurations.Api
             app.UseCors("All");
 
             app.UseHsts();
+
+            app.UseSession();
+
+            app.UseMiddleware<OwnerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
